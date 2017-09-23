@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+	<head>		
+		<style>
+			.green {	    	
+	    		background: green;
+		    }
+
+		    .red {	    	
+	    		background: red;
+		    }
+
+		    .hide {
+		    	display: none;
+		    }
+		</style>
+	</head>
+
+	<body>
+		
+		<script>		
+			let body = document.querySelector('body');
+
+			var connection = new WebSocket('wss:///fiap-iot.mybluemix.net/ws/semaforo-acessivel');
+			
+			connection.onopen = function () {};
+			
+			connection.onerror = function (error) {
+				console.log('WebSocket Error ' + error);
+			};
+
+			
+			connection.onmessage = function (e) {
+				let valor = parseInt(e.data);
+				body.className = valor === 1 ? 'green' : 'red';
+
+				var audio = new Audio(`media/${valor}.mp3`);
+				audio.play();
+			};
+		</script>
+	</body>
+</html>
