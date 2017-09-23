@@ -24,3 +24,15 @@ A aplicação html5 executando no mobile recebe toda mudança do MQQT através d
 
 ### sinal fechado
 ![sinal fechado](https://raw.githubusercontent.com/dsaouda/fiap-semaforo-acessivel/master/docs/mobile-fechado.png)
+
+# Ver funcionando
+
+Para ver funcionando acesse https://dsaouda.github.io/fiap-semaforo-acessivel/ e envie um post com sinal 0 ou 1 para https://fiap-iot.mybluemix.net/semaforo-acessivel 
+
+## Simulando sinal via CURL
+
+enviando 0 `curl -s -X POST -H "Content-Type: text/plain" --data 0 https://fiap-iot.mybluemix.net/semaforo-acessivel` 
+
+enviando 1 `curl -s -X POST -H "Content-Type: text/plain" --data 1 https://fiap-iot.mybluemix.net/semaforo-acessivel`
+
+obs: Se preferir pode usar o postman
