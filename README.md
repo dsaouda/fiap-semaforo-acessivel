@@ -1,2 +1,2 @@
 # fiap-semaforo-acessivel
-Projeto utilizando python, raspberry, sensor pir (presença), nodered, ibm bluemix, html e javascript
+Projeto tem como objetivo simular um semáforo acessível.
