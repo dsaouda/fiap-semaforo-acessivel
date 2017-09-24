@@ -23,10 +23,16 @@
     		<source src="media/inicio.mp3" type="audio/mpeg">
 		</audio>
 		
+		<button id="btn-play"></button>
 
 		<script>				
-			var audio = document.querySelector("audio#audio-inicio");		
-    		audio.play();
+			let audio = document.querySelector('audio#audio-inicio');
+			let btn = document.querySelector('button#btn-play');
+			
+			btn.addEventListener('click', function() {
+				audio.play();
+			});    		
+			btn.click();
 
 
 			let body = document.querySelector('body');
