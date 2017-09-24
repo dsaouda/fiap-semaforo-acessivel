@@ -9,12 +9,20 @@ GPIO.setup(17, GPIO.IN)
 GPIO.setwarnings(False)
 
 topic = "/fiap/28scj/iot/semaforo/acessivel"
-host = "broker.hivemq.com";
+#host = "broker.hivemq.com"
+#port = 1883
+
+host = "m13.cloudmqtt.com"
+port = 18088
+user = "dpnqsysv"
+password = "irztw2QzXI1t"
+
 
 def on_connect(client, userdata, rc):
    print("conectou "+str(rc))
    client.subscribe(topic)
 
+client.username_pw_set(user, password)
 client = mqtt.Client("", clean_session=True, userdata=None, protocol=mqtt.MQTTv311, transport="tcp")
 
 client.on_connect = on_connect
