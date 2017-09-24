@@ -18,49 +18,40 @@
 	</head>
 
 	<body>
-		
-		<audio controls id="audio-inicio">    
-    		<source src="media/inicio.mp3" type="audio/mpeg">
-		</audio>
-		
-		<script>				
-			window.onload = function() {
-				let audio = document.querySelector('audio#audio-inicio');
+		<script>			
+			var audio = new Audio('media/inicio.mp3');
+			audio.play();
+
+			let body = document.querySelector('body');
+			
+			function start () {
+				let connection = new WebSocket('wss:///fiap-iot.mybluemix.net/ws/semaforo-acessivel');
 				
-				audio.autoplay = true;
-				audio.load();
-
-
-				let body = document.querySelector('body');
+				connection.onopen = function () {};
 				
-				function start () {
-					let connection = new WebSocket('wss:///fiap-iot.mybluemix.net/ws/semaforo-acessivel');
-					
-					connection.onopen = function () {};
-					
-					connection.onerror = function (error) {
-						console.log('WebSocket Error ' + error);
-					};
-
-					
-					connection.onmessage = function (e) {
-						let valor = parseInt(e.data);
-						body.className = valor === 1 ? 'green' : 'red';
-
-						var audio = new Audio(`media/${valor}.mp3`);
-						audio.play();
-					};
-
-					return connection;
-				}
-
-				let connection = start();
-				connection.onclose = function() {
-					console.log('Conexão perdida com servidor, reconectando');
-
-					connection = start();
+				connection.onerror = function (error) {
+					console.log('WebSocket Error ' + error);
 				};
+
+				
+				connection.onmessage = function (e) {
+					let valor = parseInt(e.data);
+					body.className = valor === 1 ? 'green' : 'red';
+
+					var audio = new Audio(`media/${valor}.mp3`);
+					audio.play();
+				};
+
+				return connection;
+			}
+
+			let connection = start();
+			connection.onclose = function() {
+				console.log('Conexão perdida com servidor, reconectando');
+
+				connection = start();
 			};
+			
 		</script>
 	</body>
 </html>
