@@ -19,9 +19,17 @@
 
 	<body>
 		
-		<script>		
-			let body = document.querySelector('body');
+		<audio id="audio-inicio">    
+    		<source src="media/inicio.mp3" type="audio/mpeg">
+		</audio>
+		
 
+		<script>				
+			var audio = document.querySelector("audio#audio-inicio");		
+    		audio.play();
+
+
+			let body = document.querySelector('body');
 			var connection = new WebSocket('wss:///fiap-iot.mybluemix.net/ws/semaforo-acessivel');
 			
 			connection.onopen = function () {};
@@ -37,6 +45,10 @@
 
 				var audio = new Audio(`media/${valor}.mp3`);
 				audio.play();
+			};
+
+			connection.onclose = function() {
+				console.log('Conexão perdida com servidor');
 			};
 		</script>
 	</body>
