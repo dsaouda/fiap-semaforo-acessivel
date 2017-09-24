@@ -36,3 +36,7 @@ enviando 0 `curl -s -X POST -H "Content-Type: text/plain" --data 0 https://fiap-
 enviando 1 `curl -s -X POST -H "Content-Type: text/plain" --data 1 https://fiap-iot.mybluemix.net/semaforo-acessivel`
 
 obs: Se preferir pode usar o postman
+
+## Compatibilidade web browser mobile
+
+Alguns navegadores mobile, como o chrome, não permitem o autoplay por padrão. O motivo é para poupar banda do dispositivo. Para liberar o recurso é necessário acessar chrome://flags e selecionar a opção **No user gesture is required** na opção **Autoplay policy**.
