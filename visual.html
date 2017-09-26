@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+	<head>		
+		<style>
+			.green-border {border: 1px solid green;}
+			.red-border {border: 1px solid red;}
+			.yellow-border {border: 1px solid yellow;}
+			.green {background-color: green!important;}
+		    .red {background-color: red!important;}
+		    .yellow {background-color: yellow!important;}
+		    .hide {display: none;}
+		    .circle {
+		    	background-color: #eee;
+		    	margin: 10px;
+				border-radius: 50%;
+				width: 100px;
+				height: 100px;
+				display: inline-block;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div style="text-align: center;">
+			<div id="red" class="red-border red circle"></div>
+			<div id="yellow" class="yellow-border yellow circle"></div>
+			<div id="green" class="green-border green circle"></div>
+		</div>
+
+		<script>
+			let flag = -1;
+			let red = document.querySelector('#red');
+			let yellow = document.querySelector('#yellow');
+			let green = document.querySelector('#green');
+
+			let audio = new Audio('media/inicio.mp3');
+			audio.play();
+
+			let body = document.querySelector('body');
+			
+			function start () {
+				let connection = new WebSocket('wss:///fiap-iot.mybluemix.net/ws/semaforo-acessivel');
+				
+				connection.onopen = function () {};
+				
+				connection.onerror = function (error) {
+					console.log('WebSocket Error ' + error);
+				};
+
+				
+				connection.onmessage = function (e) {
+					let valor = parseInt(e.data);
+					
+					if (flag !== valor) {
+						flag = valor;
+						red.classList.remove('red');
+						green.classList.remove('green');
+						yellow.classList.add('yellow');
+
+						setTimeout(function() {
+							yellow.classList.remove('yellow');
+
+							if (valor === 1) {
+								red.classList.remove('red');
+								green.classList.add('green');
+							} else {
+								red.classList.add('red');
+								green.classList.remove('green');
+							}
+
+							var audio = new Audio(`media/${valor}.mp3`);
+							audio.play();	
+
+						}, 2000);
+					}
+
+					
+				};
+
+				return connection;
+			}
+
+			let connection = start();
+			connection.onclose = function() {
+				console.log('Conexão perdida com servidor, reconectando');
+
+				connection = start();
+			};
+			
+		</script>
+	</body>
+</html>
